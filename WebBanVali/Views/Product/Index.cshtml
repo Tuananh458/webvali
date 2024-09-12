@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                             src="/resources/img/product/@Model.AnhDaiDien" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.TenChiTietSP</h3>
+                    <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <span>(18 reviews)</span>
+                    </div>
+                    <div class="product__details__price">$@Model.DonGiaBan </div>
+                    <p>
+                        Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
+                        vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
+                        quam vehicula elementum sed sit amet dui. Proin eget tortor risus.
+                    </p>
+                    <div class="product__details__quantity">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <input type="text" id="quantityInput" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="primary-btn" id="addToCartBtn">Thêm vào giỏ hàng</a>
+
+                    <script>
+    $(document).ready(function () {
+        // Lắng nghe sự kiện thay đổi giá trị số lượng
+        $("#quantityInput").change(function () {
+            updateAddToCartUrl();
+        });
+
+        // Lắng nghe sự kiện khi nhấn nút "Thêm vào giỏ hàng"
+        $("#addToCartBtn").click(function (e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ 'a'
+
+            // Lấy giá trị số lượng hiện tại
+            var quantity = $("#quantityInput").val();
+
+            // Tạo URL với số lượng hiện tại và chuyển hướng đến trang "AddToCart"
+            var addToCartUrl = "@Url.Action("AddToCart", "Cart")?maSanPham=@Model.MaChiTietSP&count=" + quantity;
+            window.location.href = addToCartUrl;
+        });
+
+        // Hàm cập nhật URL khi giá trị số lượng thay đổi
+        function updateAddToCartUrl() {
+            var quantity = $("#quantityInput").val();
+            var addToCartUrl = "@Url.Action("AddToCart", "Cart")?maSanPham=@Model.MaChiTietSP&count=" + quantity;
+            $("#addToCartBtn").attr("href", addToCartUrl);
+        }
+    });
+                    </script>
+
+                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                    <ul>
+                        <li><b>Tình trạng</b> @if (Model.SLTon > 0)
+                        {<span>Còn hàng</span>}
+                        else
+                        { <span>Hết hàng</span>}</li>
+                        <li><b>Vận chuyển</b> <span>Freeship đơn hàng online từ 1.000.000đ</span></li>
+                        <li><b>Bảo hành</b> <span>1 năm</span></li>
+                        <li>
+                            <b>Chia sẻ</b>
+                            <div class="share">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                               aria-selected="true">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                               aria-selected="false">Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                               aria-selected="false">Reviews <span>(1)</span></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>@Model.TenChiTietSP</h6>
+                                <p>Price: $@Model.DonGiaBan</p>
+                                <p>Discount: @(Model.GiamGia*100) %</p>
+                                <p>Size: @Model.KichThuoc</p>
+                                <p>Color: @Model.MauSac</p>
+                                <p>Available Quantity: @Model.SLTon</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>@Model.TenChiTietSP</h6>
+                                <p>Price: $@Model.DonGiaBan</p>
+                                <p>Discount: @(Model.GiamGia*100) %</p>
+                                <p>Size: @Model.KichThuoc</p>
+                                <p>Color: @Model.MauSac</p>
+                                <p>Available Quantity: @Model.SLTon</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Products Infomation</h6>
+                                <p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

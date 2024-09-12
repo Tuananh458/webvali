@@ -1,0 +1,258 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách vali";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            // Event handler for color and size changes
+            $("input[name=color], input[name=size]").on("change", function () {
+                var color = $("input[name=color]:checked").val();
+                var size = $("input[name=size]:checked").val();
+
+                // Perform an Ajax request to reload the content with new filter values
+                $.ajax({
+                    url: '@Url.Action("listProduct", "Product")',
+                    type: 'GET',
+                    data: { color: color, size: size },
+                    success: function (data) {
+                        // Update the content with the new data
+                        $('#dynamic_container').html(data);
+                    },
+                    error: function () {
+                        alert('Error during filtering.');
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+        // Initialize the price range slider
+        $(".price-range").slider({
+            range: true,
+            min: 0,
+            max: 1000,
+            values: [0, 1000],
+            slide: function (event, ui) {
+                $("#minamount").val(ui.values[0]);
+                $("#maxamount").val(ui.values[1]);
+            },
+            change: function (event, ui) {
+                filterProducts();
+            }
+        });
+
+        $("#minamount").val($(".price-range").slider("values", 0));
+        $("#maxamount").val($(".price-range").slider("values", 1));
+
+        $("#minamount, #maxamount").on("input", function () {
+            filterProducts();
+        });
+
+        function filterProducts() {
+            var minPrice = $("#minamount").val();
+            var maxPrice = $("#maxamount").val();
+
+            $.ajax({
+                url: '@Url.Action("listProduct", "Product")',
+                type: 'GET',
+                data: { minPrice: minPrice, maxPrice: maxPrice },
+                success: function (data) {
+                    // Update the content with the new data
+                    $('#dynamic_container').html(data);
+                },
+                error: function () {
+                    alert('Error during filtering.');
+                }
+            });
+        }
+    });
+        $(document).ready(function () {
+            $(document).on("click", ".product__pagination a", function (e) {
+                e.preventDefault();
+
+                // Check if the href is empty
+                var url = $(this).attr("href");
+                if (!url || url === '#') {
+                    return;
+                }
+
+                console.log("Pagination link clicked");
+
+                // Use Ajax to load the partial view
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function (data) {
+                        console.log("Ajax request successful");
+                        // Replace the content in the container
+                        $("#dynamic_container").html(data);
+                        console.log(data);
+                    },
+                    error: function () {
+                        alert("Error loading products.");
+                    }
+                });
+            });
+        });
+
+
+        $(document).ready(function () {
+            $("#categoryList a").click(function (e) {
+                e.preventDefault();
+                var url = $(this).attr("href");
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (data) {
+                        $("#dynamic_container").html(data);
+                        console.log(data);
+                    },
+                    error: function () {
+                        alert('Error loading filtered products.');
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            $("#Reload").click(function () {
+                var url = '@Url.Action("Reload", "Product")';
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#dynamic_container').html(data);
+                    },
+                    error: function () {
+                        alert('Error clearing filters.');
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.png">
+</section>
+<!-- Breadcrumb Section End -->
+<div class="page-breadcrumbs">
+    <div class="container">
+        <ul>
+            <li><a href="@Url.Action("LoadGrid", "Product")">Trang chủ</a></li>
+            <li class="active"><a href="#">Sản Phẩm</a></li>
+        </ul>
+    </div>
+</div>
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+
+                    <div class="sidebar__item">
+                        <h4>SẢN PHẨM</h4>
+                        <ul id="categoryList">
+                            @foreach (var cate in new WebBanVali.Models.QLBanVaLiEntities().tDanhMucSPs)
+                            {
+                                <li><a href="@Url.Action("listProduct", "Product", new { categoryId = @cate.MaDM })">@cate.TenDM</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="sidebar__item">
+                        <h4>GIÁ SẢN PHẨM</h4>
+                        <div class="price-range-wrap">
+                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                 data-min="0" data-max="1000">
+                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                            </div>
+                            <div class="range-slider">
+                                <div class="price-input">
+                                    <input type="text" id="minamount">
+                                    <input type="text" id="maxamount">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar__item sidebar__item__color--option">
+                        <h4>MÀU SẮC</h4>
+                        <div class="sidebar__item__color sidebar__item__color--white">
+                            <label for="white">
+                                Trắng
+                                <input type="radio" id="white" name="color" value="white">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--gray">
+                            <label for="gray">
+                                Vàng
+                                <input type="radio" id="gray" name="color" value="gray">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--red">
+                            <label for="red">
+                                Đỏ
+                                <input type="radio" id="red" name="color" value="red">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--black">
+                            <label for="black">
+                                Đen
+                                <input type="radio" id="black" name="color" value="black">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--blue">
+                            <label for="blue">
+                                Blue
+                                <input type="radio" id="blue" name="color" value="blue">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__color sidebar__item__color--green">
+                            <label for="green">
+                                Xanh
+                                <input type="radio" id="green" name="color" value="green">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="sidebar__item">
+                        <h4>KÍCH THƯỚC</h4>
+                        <div class="sidebar__item__size">
+                            <label for="large">
+                                lớn
+                                <input type="radio" id="large" name="size" value="L">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__size">
+                            <label for="medium">
+                                Vừa
+                                <input type="radio" id="medium" name="size" value="M">
+                            </label>
+                        </div>
+                        <div class="sidebar__item__size">
+                            <label for="small">
+                                Nhỏ
+                                <input type="radio" id="small" name="size" value="S">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="sidebar__item">
+                        <button id="Reload">Bỏ lọc</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-7" id="dynamic_container">
+                @Html.Action("listProduct")
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+
+

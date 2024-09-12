@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QLBanVaLiModelStoreContainer" CdmEntityContainer="QLBanVaLiEntities">
+    <EntitySetMapping Name="tChiTietHDBs">
+      <EntityTypeMapping TypeName="QLBanVaLiModel.tChiTietHDB">
+        <MappingFragment StoreEntitySet="tChiTietHDB">
+          <ScalarProperty Name="MaChiTietHDB" ColumnName="MaChiTietHDB" />
+          <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+          <ScalarProperty Name="MaChiTietSP" ColumnName="MaChiTietSP" />
+          <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+          <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tChiTietSanPhams">
+      <EntityTypeMapping TypeName="QLBanVaLiModel.tChiTietSanPham">
+        <MappingFragment StoreEntitySet="tChiTietSanPham">
+          <ScalarProperty Name="MaChiTietSP" ColumnName="MaChiTietSP" />
+          <ScalarProperty Name="TenChiTietSP" ColumnName="TenChiTietSP" />
+          <ScalarProperty Name="MaDM" ColumnName="MaDM" />
+          <ScalarProperty Name="DonGiaBan" ColumnName="DonGiaBan" />
+          <ScalarProperty Name="GiamGia" ColumnName="GiamGia" />
+          <ScalarProperty Name="SLTon" ColumnName="SLTon" />
+          <ScalarProperty Name="KichThuoc" ColumnName="KichThuoc" />
+          <ScalarProperty Name="MauSac" ColumnName="MauSac" />
+          <ScalarProperty Name="AnhDaiDien" ColumnName="AnhDaiDien" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tDanhMucSPs">
+      <EntityTypeMapping TypeName="QLBanVaLiModel.tDanhMucSP">
+        <MappingFragment StoreEntitySet="tDanhMucSP">
+          <ScalarProperty Name="MaDM" ColumnName="MaDM" />
+          <ScalarProperty Name="TenDM" ColumnName="TenDM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tHoaDonBans">
+      <EntityTypeMapping TypeName="QLBanVaLiModel.tHoaDonBan">
+        <MappingFragment StoreEntitySet="tHoaDonBan">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
+          <ScalarProperty Name="NgayBan" ColumnName="NgayBan" />
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tKhachHangs">
+      <EntityTypeMapping TypeName="QLBanVaLiModel.tKhachHang">
+        <MappingFragment StoreEntitySet="tKhachHang">
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+          <ScalarProperty Name="TenKhachHang" ColumnName="TenKhachHang" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

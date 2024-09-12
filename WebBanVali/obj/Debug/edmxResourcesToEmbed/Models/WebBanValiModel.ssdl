@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLBanVaLiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tChiTietHDB">
+    <Key>
+      <PropertyRef Name="MaChiTietHDB" />
+    </Key>
+    <Property Name="MaChiTietHDB" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaHoaDon" Type="int" />
+    <Property Name="MaChiTietSP" Type="int" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+    <Property Name="DonGia" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tChiTietSanPham">
+    <Key>
+      <PropertyRef Name="MaChiTietSP" />
+    </Key>
+    <Property Name="MaChiTietSP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenChiTietSP" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MaDM" Type="int" />
+    <Property Name="DonGiaBan" Type="float" />
+    <Property Name="GiamGia" Type="float" />
+    <Property Name="SLTon" Type="int" />
+    <Property Name="KichThuoc" Type="char" MaxLength="25" />
+    <Property Name="MauSac" Type="char" MaxLength="25" />
+    <Property Name="AnhDaiDien" Type="char" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tDanhMucSP">
+    <Key>
+      <PropertyRef Name="MaDM" />
+    </Key>
+    <Property Name="MaDM" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenDM" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tHoaDonBan">
+    <Key>
+      <PropertyRef Name="MaHoaDon" />
+    </Key>
+    <Property Name="MaHoaDon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NgayBan" Type="date" Nullable="false" />
+    <Property Name="MaKhachHang" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Note" Type="nvarchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="tKhachHang">
+    <Key>
+      <PropertyRef Name="MaKhachHang" />
+    </Key>
+    <Property Name="MaKhachHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenKhachHang" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SoDienThoai" Type="varchar" MaxLength="15" />
+    <Property Name="username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="MatKhau" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__tChiTietH__MaChi__2F10007B">
+    <End Role="tChiTietSanPham" Type="Self.tChiTietSanPham" Multiplicity="0..1" />
+    <End Role="tChiTietHDB" Type="Self.tChiTietHDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tChiTietSanPham">
+        <PropertyRef Name="MaChiTietSP" />
+      </Principal>
+      <Dependent Role="tChiTietHDB">
+        <PropertyRef Name="MaChiTietSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tChiTietH__MaHoa__2E1BDC42">
+    <End Role="tHoaDonBan" Type="Self.tHoaDonBan" Multiplicity="0..1" />
+    <End Role="tChiTietHDB" Type="Self.tChiTietHDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tHoaDonBan">
+        <PropertyRef Name="MaHoaDon" />
+      </Principal>
+      <Dependent Role="tChiTietHDB">
+        <PropertyRef Name="MaHoaDon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tChiTietSa__MaDM__286302EC">
+    <End Role="tDanhMucSP" Type="Self.tDanhMucSP" Multiplicity="0..1" />
+    <End Role="tChiTietSanPham" Type="Self.tChiTietSanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tDanhMucSP">
+        <PropertyRef Name="MaDM" />
+      </Principal>
+      <Dependent Role="tChiTietSanPham">
+        <PropertyRef Name="MaDM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tHoaDonBa__MaKha__2B3F6F97">
+    <End Role="tKhachHang" Type="Self.tKhachHang" Multiplicity="0..1" />
+    <End Role="tHoaDonBan" Type="Self.tHoaDonBan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tKhachHang">
+        <PropertyRef Name="MaKhachHang" />
+      </Principal>
+      <Dependent Role="tHoaDonBan">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLBanVaLiModelStoreContainer">
+    <EntitySet Name="tChiTietHDB" EntityType="Self.tChiTietHDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tChiTietSanPham" EntityType="Self.tChiTietSanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tDanhMucSP" EntityType="Self.tDanhMucSP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tHoaDonBan" EntityType="Self.tHoaDonBan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tKhachHang" EntityType="Self.tKhachHang" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__tChiTietH__MaChi__2F10007B" Association="Self.FK__tChiTietH__MaChi__2F10007B">
+      <End Role="tChiTietSanPham" EntitySet="tChiTietSanPham" />
+      <End Role="tChiTietHDB" EntitySet="tChiTietHDB" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tChiTietH__MaHoa__2E1BDC42" Association="Self.FK__tChiTietH__MaHoa__2E1BDC42">
+      <End Role="tHoaDonBan" EntitySet="tHoaDonBan" />
+      <End Role="tChiTietHDB" EntitySet="tChiTietHDB" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tChiTietSa__MaDM__286302EC" Association="Self.FK__tChiTietSa__MaDM__286302EC">
+      <End Role="tDanhMucSP" EntitySet="tDanhMucSP" />
+      <End Role="tChiTietSanPham" EntitySet="tChiTietSanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tHoaDonBa__MaKha__2B3F6F97" Association="Self.FK__tHoaDonBa__MaKha__2B3F6F97">
+      <End Role="tKhachHang" EntitySet="tKhachHang" />
+      <End Role="tHoaDonBan" EntitySet="tHoaDonBan" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLBanVaLiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tChiTietHDB">
+    <Key>
+      <PropertyRef Name="MaChiTietHDB" />
+    </Key>
+    <Property Name="MaChiTietHDB" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaHoaDon" Type="Int32" />
+    <Property Name="MaChiTietSP" Type="Int32" />
+    <Property Name="SoLuong" Type="Int32" Nullable="false" />
+    <Property Name="DonGia" Type="Double" Nullable="false" />
+    <NavigationProperty Name="tChiTietSanPham" Relationship="Self.FK__tChiTietH__MaChi__31EC6D26" FromRole="tChiTietHDB" ToRole="tChiTietSanPham" />
+    <NavigationProperty Name="tHoaDonBan" Relationship="Self.FK__tChiTietH__MaHoa__30F848ED" FromRole="tChiTietHDB" ToRole="tHoaDonBan" />
+  </EntityType>
+  <EntityType Name="tChiTietSanPham">
+    <Key>
+      <PropertyRef Name="MaChiTietSP" />
+    </Key>
+    <Property Name="MaChiTietSP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenChiTietSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MaDM" Type="Int32" />
+    <Property Name="DonGiaBan" Type="Double" />
+    <Property Name="GiamGia" Type="Double" />
+    <Property Name="SLTon" Type="Int32" />
+    <Property Name="KichThuoc" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+    <Property Name="MauSac" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+    <Property Name="AnhDaiDien" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="tChiTietHDBs" Relationship="Self.FK__tChiTietH__MaChi__31EC6D26" FromRole="tChiTietSanPham" ToRole="tChiTietHDB" />
+    <NavigationProperty Name="tDanhMucSP" Relationship="Self.FK__tChiTietSa__MaDM__2B3F6F97" FromRole="tChiTietSanPham" ToRole="tDanhMucSP" />
+  </EntityType>
+  <EntityType Name="tDanhMucSP">
+    <Key>
+      <PropertyRef Name="MaDM" />
+    </Key>
+    <Property Name="MaDM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tChiTietSanPhams" Relationship="Self.FK__tChiTietSa__MaDM__2B3F6F97" FromRole="tDanhMucSP" ToRole="tChiTietSanPham" />
+  </EntityType>
+  <EntityType Name="tHoaDonBan">
+    <Key>
+      <PropertyRef Name="MaHoaDon" />
+    </Key>
+    <Property Name="MaHoaDon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NgayBan" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="MaKhachHang" Type="Int32" />
+    <NavigationProperty Name="tChiTietHDBs" Relationship="Self.FK__tChiTietH__MaHoa__30F848ED" FromRole="tHoaDonBan" ToRole="tChiTietHDB" />
+    <NavigationProperty Name="tKhachHang" Relationship="Self.FK__tHoaDonBa__MaKha__2E1BDC42" FromRole="tHoaDonBan" ToRole="tKhachHang" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Note" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tKhachHang">
+    <Key>
+      <PropertyRef Name="MaKhachHang" />
+    </Key>
+    <Property Name="MaKhachHang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenKhachHang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tHoaDonBans" Relationship="Self.FK__tHoaDonBa__MaKha__2E1BDC42" FromRole="tKhachHang" ToRole="tHoaDonBan" />
+    <Property Name="SoDienThoai" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__tChiTietH__MaChi__31EC6D26">
+    <End Role="tChiTietSanPham" Type="Self.tChiTietSanPham" Multiplicity="0..1" />
+    <End Role="tChiTietHDB" Type="Self.tChiTietHDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tChiTietSanPham">
+        <PropertyRef Name="MaChiTietSP" />
+      </Principal>
+      <Dependent Role="tChiTietHDB">
+        <PropertyRef Name="MaChiTietSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tChiTietH__MaHoa__30F848ED">
+    <End Role="tHoaDonBan" Type="Self.tHoaDonBan" Multiplicity="0..1" />
+    <End Role="tChiTietHDB" Type="Self.tChiTietHDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tHoaDonBan">
+        <PropertyRef Name="MaHoaDon" />
+      </Principal>
+      <Dependent Role="tChiTietHDB">
+        <PropertyRef Name="MaHoaDon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tChiTietSa__MaDM__2B3F6F97">
+    <End Role="tDanhMucSP" Type="Self.tDanhMucSP" Multiplicity="0..1" />
+    <End Role="tChiTietSanPham" Type="Self.tChiTietSanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tDanhMucSP">
+        <PropertyRef Name="MaDM" />
+      </Principal>
+      <Dependent Role="tChiTietSanPham">
+        <PropertyRef Name="MaDM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tHoaDonBa__MaKha__2E1BDC42">
+    <End Role="tKhachHang" Type="Self.tKhachHang" Multiplicity="0..1" />
+    <End Role="tHoaDonBan" Type="Self.tHoaDonBan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tKhachHang">
+        <PropertyRef Name="MaKhachHang" />
+      </Principal>
+      <Dependent Role="tHoaDonBan">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLBanVaLiEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tChiTietHDBs" EntityType="Self.tChiTietHDB" />
+    <EntitySet Name="tChiTietSanPhams" EntityType="Self.tChiTietSanPham" />
+    <EntitySet Name="tDanhMucSPs" EntityType="Self.tDanhMucSP" />
+    <EntitySet Name="tHoaDonBans" EntityType="Self.tHoaDonBan" />
+    <EntitySet Name="tKhachHangs" EntityType="Self.tKhachHang" />
+    <AssociationSet Name="FK__tChiTietH__MaChi__31EC6D26" Association="Self.FK__tChiTietH__MaChi__31EC6D26">
+      <End Role="tChiTietSanPham" EntitySet="tChiTietSanPhams" />
+      <End Role="tChiTietHDB" EntitySet="tChiTietHDBs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tChiTietH__MaHoa__30F848ED" Association="Self.FK__tChiTietH__MaHoa__30F848ED">
+      <End Role="tHoaDonBan" EntitySet="tHoaDonBans" />
+      <End Role="tChiTietHDB" EntitySet="tChiTietHDBs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tChiTietSa__MaDM__2B3F6F97" Association="Self.FK__tChiTietSa__MaDM__2B3F6F97">
+      <End Role="tDanhMucSP" EntitySet="tDanhMucSPs" />
+      <End Role="tChiTietSanPham" EntitySet="tChiTietSanPhams" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tHoaDonBa__MaKha__2E1BDC42" Association="Self.FK__tHoaDonBa__MaKha__2E1BDC42">
+      <End Role="tKhachHang" EntitySet="tKhachHangs" />
+      <End Role="tHoaDonBan" EntitySet="tHoaDonBans" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

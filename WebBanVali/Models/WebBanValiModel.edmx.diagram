@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cbf63353d9c640349c7d00b974182df6" Name="Diagram1" ZoomLevel="94">
+        <EntityTypeShape EntityType="QLBanVaLiModel.tChiTietHDB" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBanVaLiModel.tChiTietSanPham" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBanVaLiModel.tDanhMucSP" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBanVaLiModel.tHoaDonBan" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLBanVaLiModel.tKhachHang" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="QLBanVaLiModel.FK__tChiTietH__MaChi__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="QLBanVaLiModel.FK__tChiTietH__MaHoa__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="QLBanVaLiModel.FK__tChiTietSa__MaDM__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="QLBanVaLiModel.FK__tHoaDonBa__MaKha__2E1BDC42" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

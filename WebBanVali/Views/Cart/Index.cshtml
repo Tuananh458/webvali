@@ -1,0 +1,148 @@
+﻿﻿
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".remove-product").click(function () {
+                var maSanPhamToRemove = $(this).data("product-id");
+                $(this).closest("tr").remove();
+
+
+                $.ajax({
+                    url: '@Url.Action("RemoveCartItem", "Cart")',
+                    type: 'POST',
+                    success: function () {
+                    },
+                    error: function () {
+                    }
+                });
+            });
+            $("#updateCartBtn").click(function () {
+                console.log('Cart updating');
+                $.ajax({
+                    url: '@Url.Action("UpdateCart", "Cart")',
+                    type: 'POST',
+                    success: function () {
+                        $("[id^='quantity-']").each(function () {
+                            var maSanPham = $(this).attr("id").replace("quantity-", "");
+                            var newQuantity = $(this).val();
+
+                            $.ajax({
+                                url: '@Url.Action("UpdateCartItem", "Cart")',
+                                type: 'POST',
+                                data: { maSanPham: maSanPham, newQuantity: newQuantity },
+                                success: function (data) {
+                                    if (data.success) {
+                                        alert('Cart updated successfully!');
+                                        location.reload();
+                                    } else {
+                                        alert('Error updating cart: ' + data.hangHet + ' is out of stock.');
+                                    }
+                                },
+                                error: function () {
+                                    alert('Error updating cart.');
+                                }
+                            });
+
+                        });
+                    },
+                    error: function () {
+                    }
+                });
+            });
+        });
+    </script>
+}
+<!-- Breadcrumb Section Begin -->
+<div class="page-breadcrumbs">
+    <div class="container">
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li class="active"><a href="#" title="Phụ kiện du lịch">Giỏ Hàng</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Breadcrumb Section End -->
+<!-- Hero Section End -->
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Vali</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tiền giảm</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (WebBanVali.CartItem item in Model.GetLISTCARTS)
+                            {
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img width="60" src="/resources/img/product/@item.AnhDaiDien" alt="@item.TenChiTietSP">
+                                        <h5>@item.TenChiTietSP</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        $@item.DonGiaBan.ToString("0.00")
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="@item.SoLuong" readonly id="quantity-@item.MaChiTietSP">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        $@item.TienGiam
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        $@item.ThanhTien.ToString("0.00")
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close remove-product" data-product-id="@item.MaChiTietSP"></span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href="@Url.Action("LoadGrid", "Product")" class="primary-btn">TIẾP TỤC MUA SẮM</a>
+                    <a href="#" class="primary-btn cart-btn-right" id="updateCartBtn">
+                        CẬP NHẬT
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Cart Total</h5>
+                    <ul>
+                        <li>Tiền hàng <span>$@Model.SubTotal.ToString("0.00")</span></li>
+                       @if (@Model.SubTotal - Model.Total != 0)
+                       { <li> Giảm giá<span>-$@Model.Discout.ToString("0.00")</span></li>}
+                        <li>Tổng tiền <span>$@Model.Total.ToString("0.00")</span></li>
+                    </ul>
+                    <a href="@Url.Action("Index", "Payment")" class="primary-btn">THANH TOÁN</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->
